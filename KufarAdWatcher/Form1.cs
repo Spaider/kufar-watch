@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Dmitriev.AdWatcher.Kufar;
 
 namespace Dmitriev.AdWatcher
 {
@@ -15,6 +10,17 @@ namespace Dmitriev.AdWatcher
     public Form1()
     {
       InitializeComponent();
+    }
+
+    private void button2_Click(object sender, EventArgs e)
+    {
+      const string URL = "http://www.kufar.by/минск_город/Для_дома_и_дачи/стиральная_машина--продается?cu=USD&sp=&ps=&pe=";
+      var repo = new AdvRepository(URL);
+//      var advs = repo.GetAdvs();
+//      repo.SaveAdvs(advs);
+//      advs = repo.GetLatestAdvs().ToArray();
+//      Console.WriteLine(advs.Count());
+      repo.MarkAsRead(new[]{1, 3, 5, 7});
     }
   }
 }

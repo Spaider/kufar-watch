@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
+using Dmitriev.AdWatcher.Kufar;
 
 namespace Dmitriev.AdWatcher
 {
@@ -14,9 +15,23 @@ namespace Dmitriev.AdWatcher
     [STAThread]
     static void Main()
     {
+      CreateDatabase();
+      
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       Application.Run(new Form1());
+    }
+
+    private static void CreateDatabase()
+    {
+      var assemblyPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+      Debug.Assert(assemblyPath != null);
+      var dbFileName = Path.Combine(assemblyPath, "kufar.db");
+
+      if (!File.Exists(dbFileName))
+      {
+        AdvRepository.CreateDB(dbFileName);
+      }
     }
   }
 }
