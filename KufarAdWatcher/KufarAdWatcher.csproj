@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\AdvDb.cs" />
+    <Compile Include="DAL\AdvFeed.cs" />
     <Compile Include="DAL\AdvWatcher.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

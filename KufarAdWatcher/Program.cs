@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -26,12 +28,24 @@ namespace Dmitriev.AdWatcher
     {
       var assemblyPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
       Debug.Assert(assemblyPath != null);
-      var dbFileName = Path.Combine(assemblyPath, "kufar.db");
+      var dbFileName = Path.Combine(assemblyPath, GetDbFileNameFromConfig());
 
       if (!File.Exists(dbFileName))
       {
         AdvRepository.CreateDB(dbFileName);
       }
+    }
+
+    private static string GetDbFileNameFromConfig()
+    {
+      var connAppSettings = ConfigurationManager.AppSettings["ConnectionString.SQLite"];
+      if (string.IsNullOrWhiteSpace(connAppSettings))
+      {
+        throw new ApplicationException("ConnectionString.SQLite application setting is missing");
+      }
+
+      var builder = new SQLiteConnectionStringBuilder(connAppSettings);
+      return builder.DataSource;
     }
   }
 }

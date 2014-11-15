@@ -14,5 +14,10 @@ namespace Dmitriev.AdWatcher.DAL
       public string   Url         { get; set; }
       public bool     IsRead      { get; set; }
     }
+
+    public class Settings
+    {
+      public DateTime LastCheckTime { get; set; }
+    }
   }
 }

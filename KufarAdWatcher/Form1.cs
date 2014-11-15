@@ -14,13 +14,13 @@ namespace Dmitriev.AdWatcher
 
     private void button2_Click(object sender, EventArgs e)
     {
-      const string URL = "http://www.kufar.by/минск_город/Для_дома_и_дачи/стиральная_машина--продается?cu=USD&sp=&ps=&pe=";
-      var repo = new AdvRepository(URL);
+//      const string URL = "http://www.kufar.by/минск_город/Для_дома_и_дачи/стиральная_машина--продается?cu=USD&sp=&ps=&pe=";
+//      var repo = new AdvRepository(URL);
 //      var advs = repo.GetAdvs();
 //      repo.SaveAdvs(advs);
 //      advs = repo.GetLatestAdvs().ToArray();
 //      Console.WriteLine(advs.Count());
-      repo.MarkAsRead(new[]{1, 3, 5, 7});
+//      repo.MarkAsRead(new[]{1, 3, 5, 7});
     }
   }
 }

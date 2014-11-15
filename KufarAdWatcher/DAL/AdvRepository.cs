@@ -4,75 +4,115 @@ using System.Data.SQLite;
 using System.Linq;
 using BLToolkit.Data.Linq;
 using Dmitriev.AdWatcher.DAL;
-using HtmlAgilityPack;
 
 namespace Dmitriev.AdWatcher.Kufar
 {
-  public class AdvRepository
+  public class AdvRepository : IDisposable
   {
-    private readonly string _url;
+    private readonly AdvDb  _db;
+    private readonly bool   _ownDb;
 
-    public AdvRepository(string url)
+    public AdvRepository(AdvDb db)
     {
-      _url = url;
+      if (db != null)
+      {
+        _db = db;
+        _ownDb = false;
+      }
+      else
+      {
+        _db = new AdvDb();
+        _ownDb = true;
+      }
     }
 
-    public IEnumerable<AdvWatcher.Adv> GetAdvs()
+    public AdvRepository(string fileName)
     {
-      var web = new HtmlWeb();
-      var doc = web.Load(_url);
-      var nodes = doc.DocumentNode.SelectNodes("//*[@id=\"list_item_thumbs\"]/article");
-      
-      return nodes.Select(CreateAdFromNode);
+      _db = AdvDb.DbFactory(fileName);
+      _ownDb = true;
     }
 
     public void SaveAdvs(IEnumerable<AdvWatcher.Adv> advs)
     {
-      using (var db = new AdvDb())
-      {
-        db.BeginTransaction();
-        db.InsertBatch(advs);
-        db.CommitTransaction();
-      }
+      _db.BeginTransaction();
+      _db.InsertBatch(advs);
+      _db.CommitTransaction();
+    }
+
+    public void MarkAllAsRead()
+    {
+      _db.Advs.Set(a => a.IsRead, true).Update();
     }
 
     public void MarkAsRead(IEnumerable<int> advIds)
     {
-      using (var db = new AdvDb())
+      _db.BeginTransaction();
+      foreach (var id in advIds)
       {
-        db.BeginTransaction();
-        foreach (var id in advIds)
-        {
-          var id1 = id;
-          db.Advs
-            .Where(a => a.Id == id1)
-            .Set(a => a.IsRead, true)
-            .Update();
-        }
-        db.CommitTransaction();
+        var id1 = id;
+        _db.Advs
+          .Where(a => a.Id == id1)
+          .Set(a => a.IsRead, true)
+          .Update();
       }
+      _db.CommitTransaction();
     }
+
+    public IEnumerable<AdvWatcher.Adv> GetAdvs()
+    {
+      return _db.Advs;
+    } 
 
     public IEnumerable<AdvWatcher.Adv> GetLatestAdvs()
     {
-      using (var db = new AdvDb())
+     return 
+       from adv in _db.Advs
+       orderby adv.Time descending
+       select adv;
+    }
+
+    public void DeleteOld(DateTime beforeDate)
+    {
+      _db.Advs.Delete(a => a.Time < beforeDate);
+    }
+
+    public void SetLastCheckTime(DateTime time)
+    {
+      if (_db.Settings.Any())
       {
-        return 
-          from adv in db.Advs
-          orderby adv.Time descending
-          select adv;
+        _db.Settings.Set(s => s.LastCheckTime, time).Update();
       }
-    } 
+      else
+      {
+        _db.Settings.Insert(() => new AdvWatcher.Settings
+        {
+          LastCheckTime    = time
+        });
+      }
+    }
+
+    public DateTime GetLastCheckTime()
+    {
+      var dt = 
+        (from s in _db.Settings
+          select s.LastCheckTime).FirstOrDefault();
+
+      return dt;
+    }
 
     public static void CreateDB(string dbFileName)
     {
-      const string CREATE_ADV_TABLE_QUERY =
+      const string CREATE_DB_QUERY =
         @"CREATE TABLE [Adv] (
-          [Id] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
-          [Time] TIMESTAMP  NULL,
-          [Description] TEXT  NOT NULL,
-          [Url] TEXT  NOT NULL,
-          [IsRead] BOOLEAN  NOT NULL)";
+            [Id] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [Time] TIMESTAMP  NULL,
+            [Description] TEXT  NOT NULL,
+            [Url] TEXT  NOT NULL,
+            [IsRead] BOOLEAN  NOT NULL);
+
+          CREATE TABLE [Settings] (
+            [LastCheckTime] TIMESTAMP NULL
+          )";
 
       var connStringBuilder = new SQLiteConnectionStringBuilder
       {
@@ -81,7 +121,7 @@ namespace Dmitriev.AdWatcher.Kufar
       using (var conn = new SQLiteConnection(connStringBuilder.ConnectionString))
       {
         conn.Open();
-        using (var cmd = new SQLiteCommand(CREATE_ADV_TABLE_QUERY, conn))
+        using (var cmd = new SQLiteCommand(CREATE_DB_QUERY, conn))
         {
           cmd.ExecuteNonQuery();
         }
@@ -89,20 +129,12 @@ namespace Dmitriev.AdWatcher.Kufar
       }
     }
 
-    private static AdvWatcher.Adv CreateAdFromNode(HtmlNode node)
+    public void Dispose()
     {
-      var timeNode = node.SelectSingleNode("time");
-      var timeStr = timeNode.Attributes["datetime"].Value;
-
-      var descNode = node.SelectSingleNode("div[2]/a[1]");
-      var adv = new AdvWatcher.Adv
+      if (_ownDb && _db != null)
       {
-        Time = DateTime.Parse(timeStr),
-        Description = descNode.InnerText.Trim(),
-        Url = descNode.Attributes["href"].Value
-      };
-
-      return adv;
+        _db.Dispose();
+      }
     }
   }
 }
