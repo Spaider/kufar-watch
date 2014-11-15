@@ -8,33 +8,8 @@ using NUnit.Framework;
 namespace KufarAdWatcher.Tests
 {
   [TestFixture]
-  public class RepositoryTests
+  public class RepositoryTests : BaseTest
   {
-    private string _testDbFileName;
-
-    [SetUp]
-    public void SetUp()
-    {
-      _testDbFileName = null;
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-      if (string.IsNullOrWhiteSpace(_testDbFileName))
-      {
-        return;
-      }
-      try
-      {
-        File.Delete(_testDbFileName);
-      }
-      catch (Exception ex)
-      {
-        Console.WriteLine("Unable to delete DB file name {0}: {1}", _testDbFileName, ex.Message);
-      }
-    }
-
     [Test]
     public void SetLastCheckTime()
     {

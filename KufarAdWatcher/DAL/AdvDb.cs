@@ -31,6 +31,7 @@ namespace Dmitriev.AdWatcher.DAL
     }
 
     public Table<AdvWatcher.Adv>      Advs      { get { return GetTable<AdvWatcher.Adv>();      }}
+    public Table<AdvWatcher.Feed>     Feed      { get { return GetTable<AdvWatcher.Feed>();     }}
     public Table<AdvWatcher.Settings> Settings  { get { return GetTable<AdvWatcher.Settings>(); }}
   }
 }

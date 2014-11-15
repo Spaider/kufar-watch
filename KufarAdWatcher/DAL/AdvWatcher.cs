@@ -15,6 +15,16 @@ namespace Dmitriev.AdWatcher.DAL
       public bool     IsRead      { get; set; }
     }
 
+    public class Feed
+    {
+      [PrimaryKey, Identity]
+      public int        Id            { get; set; }
+      public string     Caption       { get; set; }
+      public string     Url           { get; set; }
+      public DateTime?  LastAdTime    { get; set; }
+      public DateTime?  LastCheckTime { get; set; }
+    }
+
     public class Settings
     {
       public DateTime LastCheckTime { get; set; }

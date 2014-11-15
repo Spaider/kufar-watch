@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using Dmitriev.AdWatcher.Kufar;
+using Dmitriev.AdWatcher.UI;
 
 namespace Dmitriev.AdWatcher
 {
@@ -21,7 +22,7 @@ namespace Dmitriev.AdWatcher
       
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new Form1());
+      Application.Run(new FeedListForm());
     }
 
     private static void CreateDatabase()

@@ -36,6 +36,9 @@
   <PropertyGroup>
     <StartupObject>Dmitriev.AdWatcher.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>kufar.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BLToolkit.4">
       <HintPath>packages\BLToolkit.4.2.0\lib\net40-full\BLToolkit.4.dll</HintPath>
@@ -66,17 +69,27 @@
     <Compile Include="DAL\AdvDb.cs" />
     <Compile Include="DAL\AdvFeed.cs" />
     <Compile Include="DAL\AdvWatcher.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="DAL\FeedRepository.cs" />
+    <Compile Include="UI\EditFeedDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="UI\EditFeedDialog.Designer.cs">
+      <DependentUpon>EditFeedDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FeedListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FeedListForm.Designer.cs">
+      <DependentUpon>FeedListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\AdvRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="UI\EditFeedDialog.resx">
+      <DependentUpon>EditFeedDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FeedListForm.resx">
+      <DependentUpon>FeedListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -102,7 +115,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="kufar.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

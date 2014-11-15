@@ -112,6 +112,14 @@ namespace Dmitriev.AdWatcher.Kufar
 
           CREATE TABLE [Settings] (
             [LastCheckTime] TIMESTAMP NULL
+          );
+          
+          CREATE TABLE [Feed] (
+            [Id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [Caption] TEXT NOT NULL,
+            [Url] TEXT NOT NULL,
+            [LastAdTime] TIMESTAMP NULL,
+            [LastCheckTime] TIMESTAMP NULL
           )";
 
       var connStringBuilder = new SQLiteConnectionStringBuilder
