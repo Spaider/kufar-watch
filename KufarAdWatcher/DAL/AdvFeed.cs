@@ -23,7 +23,7 @@ namespace Dmitriev.AdWatcher.DAL
       var doc = web.Load(_url);
       var nodes = doc.DocumentNode.SelectNodes("//*[@id=\"list_item_thumbs\"]/article");
 
-      return nodes.Select(CreateAdFromNode);
+      return nodes != null ? nodes.Select(CreateAdFromNode) : new AdvWatcher.Adv[0];
     }
 
     private static AdvWatcher.Adv CreateAdFromNode(HtmlNode node)
