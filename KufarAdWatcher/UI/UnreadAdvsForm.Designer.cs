@@ -41,7 +41,7 @@
       // 
       this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-      this.btnOK.Location = new System.Drawing.Point(128, 7);
+      this.btnOK.Location = new System.Drawing.Point(421, 7);
       this.btnOK.Name = "btnOK";
       this.btnOK.Size = new System.Drawing.Size(75, 23);
       this.btnOK.TabIndex = 0;
@@ -53,9 +53,9 @@
       this.panel1.Controls.Add(this.btnCancel);
       this.panel1.Controls.Add(this.btnOK);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.panel1.Location = new System.Drawing.Point(0, 237);
+      this.panel1.Location = new System.Drawing.Point(0, 248);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(292, 36);
+      this.panel1.Size = new System.Drawing.Size(585, 36);
       this.panel1.TabIndex = 1;
       // 
       // listAdvs
@@ -66,7 +66,7 @@
       this.listAdvs.FullRowSelect = true;
       this.listAdvs.Location = new System.Drawing.Point(0, 0);
       this.listAdvs.Name = "listAdvs";
-      this.listAdvs.Size = new System.Drawing.Size(292, 237);
+      this.listAdvs.Size = new System.Drawing.Size(585, 248);
       this.listAdvs.TabIndex = 2;
       this.listAdvs.UseCompatibleStateImageBehavior = false;
       this.listAdvs.View = System.Windows.Forms.View.Details;
@@ -81,7 +81,7 @@
       // 
       this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(209, 7);
+      this.btnCancel.Location = new System.Drawing.Point(502, 7);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(75, 23);
       this.btnCancel.TabIndex = 1;
@@ -94,13 +94,16 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
-      this.ClientSize = new System.Drawing.Size(292, 273);
+      this.ClientSize = new System.Drawing.Size(585, 284);
       this.Controls.Add(this.listAdvs);
       this.Controls.Add(this.panel1);
       this.Font = new System.Drawing.Font("Tahoma", 8.25F);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "UnreadAdvsForm";
+      this.ShowIcon = false;
+      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Новые объявления";
+      this.Resize += new System.EventHandler(this.UnreadAdvsForm_Resize);
       this.panel1.ResumeLayout(false);
       this.ResumeLayout(false);
 

@@ -46,6 +46,7 @@ namespace Dmitriev.AdWatcher.UI
         listAdvs.Items.Add(listItem);
         group.Items.Add(listItem);
       }
+      AutoSizeColumns();
     }
 
     private void listAdvs_DoubleClick(object sender, System.EventArgs e)
@@ -62,6 +63,16 @@ namespace Dmitriev.AdWatcher.UI
         return;
       }
       Process.Start(adv.Url);
+    }
+
+    private void UnreadAdvsForm_Resize(object sender, System.EventArgs e)
+    {
+      AutoSizeColumns();
+    }
+
+    private void AutoSizeColumns()
+    {
+      listAdvs.Columns[0].Width = ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 4;
     }
   }
 }

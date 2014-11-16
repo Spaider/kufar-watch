@@ -97,6 +97,7 @@ namespace Dmitriev.AdWatcher.UI
       {
         return;
       }
+      notifyIcon1.Icon = Resources.KufarSearch;
       _checkInProgress = true;
       AdvWatcher.Feed[] feedsCopy;
       lock (_feedSync)
@@ -106,26 +107,26 @@ namespace Dmitriev.AdWatcher.UI
       var newAds = (await Scheduler.CheckForNewAds(feedsCopy)).ToArray();
       _checkInProgress = false;
 
-      if (!newAds.Any())
+      if (newAds.Any())
       {
-        return;
+        foreach (var adv in newAds)
+        {
+          _unreadAdvs.Add(adv);
+        }
+        notifyIcon1.ShowBalloonTip(
+          10000,
+          "Новые объявления",
+          "Новых объявлений: " + _unreadAdvs.Count,
+          ToolTipIcon.Info);
+        miNewFeeds.Enabled = true;
+        UpdateTrayIconText();
+        using (var stream = Resources.NewAdsAvailable)
+        {
+          var player = new SoundPlayer(stream);
+          player.Play();
+        }
       }
-      foreach (var adv in newAds)
-      {
-        _unreadAdvs.Add(adv);
-      }
-      notifyIcon1.ShowBalloonTip(
-        10000, 
-        "Новые объявления",
-        "Новых объявлений: " + _unreadAdvs.Count,
-        ToolTipIcon.Info);
-      miNewFeeds.Enabled = true;
-      UpdateTrayIconText();
-      using (var stream = Resources.NewAdsAvailable)
-      {
-        var player = new SoundPlayer(stream);
-        player.Play();
-      }
+      notifyIcon1.Icon = Resources.Kufar;
     }
 
     private void UpdateTrayIconText()

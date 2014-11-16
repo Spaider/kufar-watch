@@ -126,6 +126,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="kufar.ico" />
+    <None Include="Resources\KufarSearch.ico" />
+    <None Include="Resources\kufar.ico" />
     <None Include="sms-received2.wav" />
     <None Include="Resources\AppIcon.ico" />
   </ItemGroup>
