@@ -93,7 +93,7 @@ namespace Dmitriev.AdWatcher.UI
 
     private async Task CheckForNewFeeds()
     {
-      if (_checkInProgress)
+      if (_checkInProgress || _feeds == null || !_feeds.Any())
       {
         return;
       }
@@ -210,6 +210,7 @@ namespace Dmitriev.AdWatcher.UI
       }
       _unreadAdvs.Clear();
       miNewFeeds.Enabled = false;
+      UpdateTrayIconText();
     }
 
     private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
