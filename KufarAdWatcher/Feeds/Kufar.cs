@@ -33,9 +33,10 @@ namespace Dmitriev.AdWatcher.Feeds
       var timeStr = timeNode.Attributes["datetime"].Value;
 
       var descNode = node.SelectSingleNode("div[2]/a[1]");
+      // Kufar stores has local time on page but shows them as UTC
       var adv = new AdvWatcher.Adv
       {
-        Time = DateTime.Parse(timeStr),
+        Time = DateTime.Parse(timeStr).ToUniversalTime(),
         Description = descNode.InnerText.Trim(),
         Url = descNode.Attributes["href"].Value
       };

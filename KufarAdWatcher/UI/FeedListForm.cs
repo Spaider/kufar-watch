@@ -26,8 +26,15 @@ namespace Dmitriev.AdWatcher.UI
       InitializeComponent();
       listBox1.DataSource = _feeds;
       ReloadFeeds();
-      timer1.Start();
-      UpdateTrayIconAndText();
+      if (_feeds.Any())
+      {
+        UpdateTrayIconAndText();
+        timer1.Start();
+      }
+      else
+      {
+        WindowState = FormWindowState.Normal;
+      }
     }
 
     private void ReloadFeeds()
@@ -150,7 +157,12 @@ namespace Dmitriev.AdWatcher.UI
 
     private void tsbAddFeed_Click(object sender, EventArgs e)
     {
+      timer1.Stop();
       ShowAddFeedDialog();
+      if (_feeds.Any())
+      {
+        timer1.Start();
+      }
     }
 
     private void ShowAddFeedDialog()
@@ -185,6 +197,10 @@ namespace Dmitriev.AdWatcher.UI
     private void tsbRemoveFeed_Click(object sender, EventArgs e)
     {
       RemoveFeeds();
+      if (!_feeds.Any())
+      {
+        timer1.Stop();
+      }
     }
 
     private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
