@@ -76,30 +76,6 @@ namespace Dmitriev.AdWatcher.Kufar
       _db.Advs.Delete(a => a.Time < beforeDate);
     }
 
-    public void SetLastCheckTime(DateTime time)
-    {
-      if (_db.Settings.Any())
-      {
-        _db.Settings.Set(s => s.LastCheckTime, time).Update();
-      }
-      else
-      {
-        _db.Settings.Insert(() => new AdvWatcher.Settings
-        {
-          LastCheckTime    = time
-        });
-      }
-    }
-
-    public DateTime GetLastCheckTime()
-    {
-      var dt = 
-        (from s in _db.Settings
-          select s.LastCheckTime).FirstOrDefault();
-
-      return dt;
-    }
-
     public static void CreateDB(string dbFileName)
     {
       const string CREATE_DB_QUERY =
@@ -110,10 +86,6 @@ namespace Dmitriev.AdWatcher.Kufar
             [Url] TEXT  NOT NULL,
             [IsRead] BOOLEAN  NOT NULL);
 
-          CREATE TABLE [Settings] (
-            [LastCheckTime] TIMESTAMP NULL
-          );
-          
           CREATE TABLE [Feed] (
             [Id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             [Caption] TEXT NOT NULL,

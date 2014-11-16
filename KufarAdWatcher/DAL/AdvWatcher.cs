@@ -3,6 +3,9 @@ using BLToolkit.DataAccess;
 
 namespace Dmitriev.AdWatcher.DAL
 {
+  /// <summary>
+  /// Adv Watcher database schema
+  /// </summary>
   public class AdvWatcher
   {
     public class Adv
@@ -23,11 +26,6 @@ namespace Dmitriev.AdWatcher.DAL
       public string     Url           { get; set; }
       public DateTime?  LastAdTime    { get; set; }
       public DateTime?  LastCheckTime { get; set; }
-    }
-
-    public class Settings
-    {
-      public DateTime LastCheckTime { get; set; }
     }
   }
 }

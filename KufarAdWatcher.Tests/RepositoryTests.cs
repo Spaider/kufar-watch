@@ -11,25 +11,6 @@ namespace KufarAdWatcher.Tests
   public class RepositoryTests : BaseTest
   {
     [Test]
-    public void SetLastCheckTime()
-    {
-      _testDbFileName = Path.GetTempFileName();
-      AdvRepository.CreateDB(_testDbFileName);
-      using (var repo = new AdvRepository(_testDbFileName))
-      {
-        var dt = repo.GetLastCheckTime();
-
-        Assert.That(dt, Is.EqualTo(new DateTime()));
-
-        var now = DateTime.Now;
-        repo.SetLastCheckTime(now);
-
-        dt = repo.GetLastCheckTime();
-        Assert.That(dt, Is.EqualTo(now));
-      }
-    }
-
-    [Test]
     public void SaveAds()
     {
       const string desc = "testdesc";
