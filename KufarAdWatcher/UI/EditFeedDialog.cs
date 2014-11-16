@@ -24,11 +24,18 @@ namespace Dmitriev.AdWatcher.UI
     private void textBox1_TextChanged(object sender, System.EventArgs e)
     {
       _feed.Url = textBox1.Text;
+      CheckInput();
+    }
+
+    private void CheckInput()
+    {
+      button1.Enabled = !string.IsNullOrWhiteSpace(_feed.Url) && !string.IsNullOrWhiteSpace(_feed.Caption);
     }
 
     private void textBox2_TextChanged(object sender, System.EventArgs e)
     {
       _feed.Caption = textBox2.Text;
+      CheckInput();
     }
   }
 }

@@ -30,48 +30,32 @@
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FeedListForm));
-      this.button1 = new System.Windows.Forms.Button();
       this.listBox1 = new System.Windows.Forms.ListBox();
-      this.button2 = new System.Windows.Forms.Button();
       this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.miFeedList = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
       this.miExit = new System.Windows.Forms.ToolStripMenuItem();
       this.timer1 = new System.Windows.Forms.Timer(this.components);
+      this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+      this.tsbAddFeed = new System.Windows.Forms.ToolStripButton();
+      this.tsbRemoveFeed = new System.Windows.Forms.ToolStripButton();
       this.contextMenuStrip1.SuspendLayout();
+      this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
-      // 
-      // button1
-      // 
-      this.button1.Location = new System.Drawing.Point(12, 12);
-      this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(89, 23);
-      this.button1.TabIndex = 1;
-      this.button1.Text = "Добавить...";
-      this.button1.UseVisualStyleBackColor = true;
-      this.button1.Click += new System.EventHandler(this.button1_Click);
       // 
       // listBox1
       // 
       this.listBox1.DisplayMember = "Caption";
+      this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.listBox1.FormattingEnabled = true;
-      this.listBox1.Location = new System.Drawing.Point(12, 41);
+      this.listBox1.Location = new System.Drawing.Point(0, 25);
       this.listBox1.Name = "listBox1";
       this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-      this.listBox1.Size = new System.Drawing.Size(373, 199);
+      this.listBox1.Size = new System.Drawing.Size(397, 228);
       this.listBox1.TabIndex = 2;
       this.listBox1.ValueMember = "Id";
-      // 
-      // button2
-      // 
-      this.button2.Location = new System.Drawing.Point(107, 12);
-      this.button2.Name = "button2";
-      this.button2.Size = new System.Drawing.Size(75, 23);
-      this.button2.TabIndex = 3;
-      this.button2.Text = "Удалить";
-      this.button2.UseVisualStyleBackColor = true;
-      this.button2.Click += new System.EventHandler(this.button2_Click);
+      this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
       // 
       // notifyIcon1
       // 
@@ -114,14 +98,45 @@
       this.timer1.Interval = 60000;
       this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
       // 
+      // toolStrip1
+      // 
+      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbAddFeed,
+            this.tsbRemoveFeed});
+      this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+      this.toolStrip1.Name = "toolStrip1";
+      this.toolStrip1.Size = new System.Drawing.Size(397, 25);
+      this.toolStrip1.Stretch = true;
+      this.toolStrip1.TabIndex = 3;
+      this.toolStrip1.Text = "Ленты";
+      // 
+      // tsbAddFeed
+      // 
+      this.tsbAddFeed.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.tsbAddFeed.Image = ((System.Drawing.Image)(resources.GetObject("tsbAddFeed.Image")));
+      this.tsbAddFeed.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.tsbAddFeed.Name = "tsbAddFeed";
+      this.tsbAddFeed.Size = new System.Drawing.Size(73, 22);
+      this.tsbAddFeed.Text = "Добавить...";
+      this.tsbAddFeed.Click += new System.EventHandler(this.tsbAddFeed_Click);
+      // 
+      // tsbRemoveFeed
+      // 
+      this.tsbRemoveFeed.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.tsbRemoveFeed.Image = ((System.Drawing.Image)(resources.GetObject("tsbRemoveFeed.Image")));
+      this.tsbRemoveFeed.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.tsbRemoveFeed.Name = "tsbRemoveFeed";
+      this.tsbRemoveFeed.Size = new System.Drawing.Size(55, 22);
+      this.tsbRemoveFeed.Text = "Удалить";
+      this.tsbRemoveFeed.Click += new System.EventHandler(this.tsbRemoveFeed_Click);
+      // 
       // FeedListForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(397, 253);
-      this.Controls.Add(this.button2);
       this.Controls.Add(this.listBox1);
-      this.Controls.Add(this.button1);
+      this.Controls.Add(this.toolStrip1);
       this.Font = new System.Drawing.Font("Tahoma", 8.25F);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FeedListForm";
@@ -131,20 +146,24 @@
       this.Load += new System.EventHandler(this.FeedListForm_Load);
       this.Resize += new System.EventHandler(this.FeedListForm_Resize);
       this.contextMenuStrip1.ResumeLayout(false);
+      this.toolStrip1.ResumeLayout(false);
+      this.toolStrip1.PerformLayout();
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
     #endregion
 
-    private System.Windows.Forms.Button button1;
     private System.Windows.Forms.ListBox listBox1;
-    private System.Windows.Forms.Button button2;
     private System.Windows.Forms.NotifyIcon notifyIcon1;
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     private System.Windows.Forms.ToolStripMenuItem miFeedList;
     private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     private System.Windows.Forms.ToolStripMenuItem miExit;
     private System.Windows.Forms.Timer timer1;
+    private System.Windows.Forms.ToolStrip toolStrip1;
+    private System.Windows.Forms.ToolStripButton tsbAddFeed;
+    private System.Windows.Forms.ToolStripButton tsbRemoveFeed;
   }
 }

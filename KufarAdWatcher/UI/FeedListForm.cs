@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLToolkit.Data.Linq;
@@ -24,26 +25,6 @@ namespace Dmitriev.AdWatcher.UI
       timer1.Start();
     }
 
-    private void button1_Click(object sender, EventArgs e)
-    {
-      var frm = new EditFeedDialog(new AdvWatcher.Feed());
-
-      if (frm.ShowDialog() != DialogResult.OK)
-      {
-        return;
-      }
-      using (var db = new AdvDb())
-      {
-        db.Feed.InsertWithIdentity(() =>
-          new AdvWatcher.Feed
-          {
-            Caption = frm.Feed.Caption,
-            Url = frm.Feed.Url
-          });
-      }
-      ReloadFeeds();
-    }
-
     private void ReloadFeeds()
     {
       lock (_feedSync)
@@ -59,11 +40,11 @@ namespace Dmitriev.AdWatcher.UI
       }
     }
 
-    private void button2_Click(object sender, EventArgs e)
+    private void RemoveFeeds()
     {
       var idList = new List<int>();
-      foreach (var feed in from int idx in listBox1.SelectedIndices 
-                           select listBox1.Items[idx] as AdvWatcher.Feed)
+      foreach (var feed in from int idx in listBox1.SelectedIndices
+        select listBox1.Items[idx] as AdvWatcher.Feed)
       {
         Debug.Assert(feed != null);
         idList.Add(feed.Id);
@@ -127,6 +108,47 @@ namespace Dmitriev.AdWatcher.UI
     private async void FeedListForm_Load(object sender, EventArgs e)
     {
       await CheckForNewFeeds();
+    }
+
+    private void tsbAddFeed_Click(object sender, EventArgs e)
+    {
+      ShowAddFeedDialog();
+    }
+
+    private void ShowAddFeedDialog()
+    {
+      var text = Clipboard.GetText();
+      var feed = new AdvWatcher.Feed();
+      if (!string.IsNullOrEmpty(text) && Uri.IsWellFormedUriString(text, UriKind.Absolute))
+      {
+        feed.Url = text.Trim();
+      }
+      var frm = new EditFeedDialog(feed);
+
+      if (frm.ShowDialog() != DialogResult.OK)
+      {
+        return;
+      }
+      using (var db = new AdvDb())
+      {
+        db.Feed.InsertWithIdentity(() =>
+          new AdvWatcher.Feed
+          {
+            Caption = frm.Feed.Caption,
+            Url = frm.Feed.Url
+          });
+      }
+      ReloadFeeds();
+    }
+
+    private void tsbRemoveFeed_Click(object sender, EventArgs e)
+    {
+      RemoveFeeds();
+    }
+
+    private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      tsbRemoveFeed.Enabled = listBox1.SelectedIndices.Count > 0;
     }
   }
 }
