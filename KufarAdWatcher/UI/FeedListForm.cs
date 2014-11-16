@@ -14,6 +14,8 @@ namespace Dmitriev.AdWatcher.UI
 {
   public partial class FeedListForm : Form
   {
+    private const string TRAY_ICON_TEXT = "Объявления на Kufar.by";
+
     private readonly IList<AdvWatcher.Feed>   _feeds            = new BindingList<AdvWatcher.Feed>();
     private readonly object                   _feedSync         = new object();
     private bool                              _checkInProgress;
@@ -25,6 +27,7 @@ namespace Dmitriev.AdWatcher.UI
       listBox1.DataSource = _feeds;
       ReloadFeeds();
       timer1.Start();
+      UpdateTrayIconText();
     }
 
     private void ReloadFeeds()
@@ -117,11 +120,19 @@ namespace Dmitriev.AdWatcher.UI
         "Новых объявлений: " + _unreadAdvs.Count,
         ToolTipIcon.Info);
       miNewFeeds.Enabled = true;
+      UpdateTrayIconText();
       using (var stream = Resources.NewAdsAvailable)
       {
         var player = new SoundPlayer(stream);
         player.Play();
       }
+    }
+
+    private void UpdateTrayIconText()
+    {
+      notifyIcon1.Text = _unreadAdvs.Any()
+        ? string.Format("{0}{1}Новых объявлений: {2}", TRAY_ICON_TEXT, Environment.NewLine, _unreadAdvs.Count)
+        : TRAY_ICON_TEXT + Environment.NewLine + "Новых объявлений нет";
     }
 
     private async void FeedListForm_Load(object sender, EventArgs e)

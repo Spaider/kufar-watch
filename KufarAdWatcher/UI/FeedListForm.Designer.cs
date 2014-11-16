@@ -33,6 +33,7 @@
       this.listBox1 = new System.Windows.Forms.ListBox();
       this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.miNewFeeds = new System.Windows.Forms.ToolStripMenuItem();
       this.miFeedList = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
       this.miExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,7 +41,6 @@
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.tsbAddFeed = new System.Windows.Forms.ToolStripButton();
       this.tsbRemoveFeed = new System.Windows.Forms.ToolStripButton();
-      this.miNewFeeds = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStrip1.SuspendLayout();
       this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
@@ -62,7 +62,6 @@
       // 
       this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
       this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-      this.notifyIcon1.Text = "Объявления на Kufar.by";
       this.notifyIcon1.Visible = true;
       this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
       this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
@@ -76,6 +75,15 @@
             this.miExit});
       this.contextMenuStrip1.Name = "contextMenuStrip1";
       this.contextMenuStrip1.Size = new System.Drawing.Size(197, 76);
+      // 
+      // miNewFeeds
+      // 
+      this.miNewFeeds.Enabled = false;
+      this.miNewFeeds.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+      this.miNewFeeds.Name = "miNewFeeds";
+      this.miNewFeeds.Size = new System.Drawing.Size(196, 22);
+      this.miNewFeeds.Text = "Новые объявления...";
+      this.miNewFeeds.Click += new System.EventHandler(this.miNewFeeds_Click);
       // 
       // miFeedList
       // 
@@ -133,15 +141,6 @@
       this.tsbRemoveFeed.Size = new System.Drawing.Size(55, 22);
       this.tsbRemoveFeed.Text = "Удалить";
       this.tsbRemoveFeed.Click += new System.EventHandler(this.tsbRemoveFeed_Click);
-      // 
-      // miNewFeeds
-      // 
-      this.miNewFeeds.Enabled = false;
-      this.miNewFeeds.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-      this.miNewFeeds.Name = "miNewFeeds";
-      this.miNewFeeds.Size = new System.Drawing.Size(196, 22);
-      this.miNewFeeds.Text = "Новые объявления...";
-      this.miNewFeeds.Click += new System.EventHandler(this.miNewFeeds_Click);
       // 
       // FeedListForm
       // 
