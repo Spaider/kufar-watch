@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLToolkit.Data.Linq;
 using Dmitriev.AdWatcher.DAL;
+using Dmitriev.AdWatcher.Feeds;
 
 namespace Dmitriev.AdWatcher
 {
@@ -47,7 +48,7 @@ namespace Dmitriev.AdWatcher
           return new AdvWatcher.Adv[0];
         }
         Trace.WriteLine(string.Format("Check feed {0} - '{1}'", id, feed.Caption), TRACE_CATEGORY);
-        var feedList = new AdvFeed(feed.Url);
+        var feedList = new Feeds.Kufar(feed.Url);
         var lastTime = feed.LastAdTime.GetValueOrDefault();
         var checkTime = DateTime.Now;
         var advList = feedList

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dmitriev.AdWatcher.DAL;
 using HtmlAgilityPack;
 
-namespace Dmitriev.AdWatcher.DAL
+namespace Dmitriev.AdWatcher.Feeds
 {
-  public class AdvFeed
+  public class Kufar
   {
     private readonly string _url;
 
-    public AdvFeed(string url)
+    public Kufar(string url)
     {
       if (String.IsNullOrWhiteSpace(url))
         throw new ArgumentNullException("url");

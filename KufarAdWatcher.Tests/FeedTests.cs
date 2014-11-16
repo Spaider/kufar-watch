@@ -1,4 +1,5 @@
 ﻿using Dmitriev.AdWatcher.DAL;
+using Dmitriev.AdWatcher.Feeds;
 using NUnit.Framework;
 
 namespace KufarAdWatcher.Tests
@@ -11,7 +12,7 @@ namespace KufarAdWatcher.Tests
     [Test]
     public void GetAdvs()
     {
-      var feed = new AdvFeed(URL);
+      var feed = new Kufar(URL);
       var advList = feed.GetAdvs();
 
       Assert.IsNotEmpty(advList);

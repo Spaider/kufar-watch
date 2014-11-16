@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\AdvDb.cs" />
-    <Compile Include="DAL\AdvFeed.cs" />
+    <Compile Include="Feeds\Kufar.cs" />
     <Compile Include="DAL\AdvWatcher.cs" />
     <Compile Include="DAL\FeedRepository.cs" />
     <Compile Include="Scheduler.cs" />
