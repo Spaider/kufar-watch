@@ -27,7 +27,7 @@ namespace Dmitriev.AdWatcher.UI
       listBox1.DataSource = _feeds;
       ReloadFeeds();
       timer1.Start();
-      UpdateTrayIconText();
+      UpdateTrayIconAndText();
     }
 
     private void ReloadFeeds()
@@ -119,21 +119,28 @@ namespace Dmitriev.AdWatcher.UI
           "Новых объявлений: " + _unreadAdvs.Count,
           ToolTipIcon.Info);
         miNewFeeds.Enabled = true;
-        UpdateTrayIconText();
+        UpdateTrayIconAndText();
         using (var stream = Resources.NewAdsAvailable)
         {
           var player = new SoundPlayer(stream);
           player.Play();
         }
       }
-      notifyIcon1.Icon = Resources.Kufar;
     }
 
-    private void UpdateTrayIconText()
+    private void UpdateTrayIconAndText()
     {
-      notifyIcon1.Text = _unreadAdvs.Any()
-        ? string.Format("{0}{1}Новых объявлений: {2}", TRAY_ICON_TEXT, Environment.NewLine, _unreadAdvs.Count)
-        : TRAY_ICON_TEXT + Environment.NewLine + "Новых объявлений нет";
+      if (_unreadAdvs.Any())
+      {
+        notifyIcon1.Text = string.Format("{0}{1}Новых объявлений: {2}", TRAY_ICON_TEXT, Environment.NewLine,
+          _unreadAdvs.Count);
+        notifyIcon1.Icon = Resources.KufarExclamation;
+      }
+      else
+      {
+        notifyIcon1.Text = TRAY_ICON_TEXT + Environment.NewLine + "Новых объявлений нет";
+        notifyIcon1.Icon = Resources.Kufar;
+      }
     }
 
     private async void FeedListForm_Load(object sender, EventArgs e)
@@ -210,7 +217,7 @@ namespace Dmitriev.AdWatcher.UI
       }
       _unreadAdvs.Clear();
       miNewFeeds.Enabled = false;
-      UpdateTrayIconText();
+      UpdateTrayIconAndText();
     }
 
     private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)

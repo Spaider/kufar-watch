@@ -31,9 +31,9 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnreadAdvsForm));
       this.btnOK = new System.Windows.Forms.Button();
       this.panel1 = new System.Windows.Forms.Panel();
+      this.btnCancel = new System.Windows.Forms.Button();
       this.listAdvs = new System.Windows.Forms.ListView();
       this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.btnCancel = new System.Windows.Forms.Button();
       this.panel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -58,6 +58,17 @@
       this.panel1.Size = new System.Drawing.Size(585, 36);
       this.panel1.TabIndex = 1;
       // 
+      // btnCancel
+      // 
+      this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+      this.btnCancel.Location = new System.Drawing.Point(502, 7);
+      this.btnCancel.Name = "btnCancel";
+      this.btnCancel.Size = new System.Drawing.Size(75, 23);
+      this.btnCancel.TabIndex = 1;
+      this.btnCancel.Text = "Позже";
+      this.btnCancel.UseVisualStyleBackColor = true;
+      // 
       // listAdvs
       // 
       this.listAdvs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -75,18 +86,7 @@
       // columnHeader1
       // 
       this.columnHeader1.Text = "";
-      this.columnHeader1.Width = 288;
-      // 
-      // btnCancel
-      // 
-      this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(502, 7);
-      this.btnCancel.Name = "btnCancel";
-      this.btnCancel.Size = new System.Drawing.Size(75, 23);
-      this.btnCancel.TabIndex = 1;
-      this.btnCancel.Text = "Позже";
-      this.btnCancel.UseVisualStyleBackColor = true;
+      this.columnHeader1.Width = 581;
       // 
       // UnreadAdvsForm
       // 

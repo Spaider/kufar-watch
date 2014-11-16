@@ -121,6 +121,9 @@
   <data name="Kufar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\kufar.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="KufarExclamation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\kufar-exclamation.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="KufarSearch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\KufarSearch.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
