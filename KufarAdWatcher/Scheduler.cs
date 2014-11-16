@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLToolkit.Data.Linq;
 using Dmitriev.AdWatcher.DAL;
-using Dmitriev.AdWatcher.Feeds;
 
 namespace Dmitriev.AdWatcher
 {
@@ -18,11 +17,11 @@ namespace Dmitriev.AdWatcher
       return Task.Run(() => CheckFeedInternal(id));
     }
 
-    public static async Task<int> CheckForNewAds(AdvWatcher.Feed[] feeds)
+    public static async Task<IEnumerable<AdvWatcher.Adv>> CheckForNewAds(AdvWatcher.Feed[] feeds)
     {
       if (feeds == null || !feeds.Any())
       {
-        return 0;
+        return new AdvWatcher.Adv[0];
       }
       var newAds = new List<AdvWatcher.Adv>();
       foreach (var f in feeds)
@@ -34,7 +33,7 @@ namespace Dmitriev.AdWatcher
           newAds.AddRange(ads);
         }
       }
-      return newAds.Count;
+      return newAds;
     }
 
     private static AdvWatcher.Adv[] CheckFeedInternal(int id)
@@ -54,7 +53,13 @@ namespace Dmitriev.AdWatcher
         var advList = feedList
           .GetAdvs()
           .Where(a => a.Time > lastTime)
-          .OrderByDescending(a => a.Time);
+          .OrderByDescending(a => a.Time)
+          .ToArray();
+
+        foreach (var adv in advList)
+        {
+          adv.FeedId = id;
+        }
 
         if (!advList.Any())
         {

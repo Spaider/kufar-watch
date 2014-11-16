@@ -81,6 +81,7 @@ namespace Dmitriev.AdWatcher.Kufar
       const string CREATE_DB_QUERY =
         @"CREATE TABLE [Adv] (
             [Id] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [FeedId] INTEGER NOT NULL,
             [Time] TIMESTAMP  NULL,
             [Description] TEXT  NOT NULL,
             [Url] TEXT  NOT NULL,

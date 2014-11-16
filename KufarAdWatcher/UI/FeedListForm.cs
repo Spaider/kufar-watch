@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLToolkit.Data.Linq;
 using Dmitriev.AdWatcher.DAL;
+using Dmitriev.AdWatcher.Properties;
 
 namespace Dmitriev.AdWatcher.UI
 {
@@ -15,6 +17,7 @@ namespace Dmitriev.AdWatcher.UI
     private readonly IList<AdvWatcher.Feed>   _feeds            = new BindingList<AdvWatcher.Feed>();
     private readonly object                   _feedSync         = new object();
     private bool                              _checkInProgress;
+    private readonly IList<AdvWatcher.Adv>    _unreadAdvs       = new List<AdvWatcher.Adv>();
 
     public FeedListForm()
     {
@@ -77,9 +80,7 @@ namespace Dmitriev.AdWatcher.UI
 
     private void notifyIcon1_DoubleClick(object sender, EventArgs e)
     {
-      ShowInTaskbar = true;
-      Show();
-      WindowState = FormWindowState.Normal;
+      ShowNewFeedsDialog();
     }
 
     private async void timer1_Tick(object sender, EventArgs e)
@@ -99,9 +100,28 @@ namespace Dmitriev.AdWatcher.UI
       {
         feedsCopy = _feeds.ToArray();
       }
-      var cnt = await Scheduler.CheckForNewAds(feedsCopy);
-      Trace.WriteLine("Новых объявлений: " + cnt);
+      var newAds = (await Scheduler.CheckForNewAds(feedsCopy)).ToArray();
       _checkInProgress = false;
+
+      if (!newAds.Any())
+      {
+        return;
+      }
+      foreach (var adv in newAds)
+      {
+        _unreadAdvs.Add(adv);
+      }
+      notifyIcon1.ShowBalloonTip(
+        10000, 
+        "Новые объявления",
+        "Новых объявлений: " + _unreadAdvs.Count,
+        ToolTipIcon.Info);
+      miNewFeeds.Enabled = true;
+      using (var stream = Resources.NewAdsAvailable)
+      {
+        var player = new SoundPlayer(stream);
+        player.Play();
+      }
     }
 
     private async void FeedListForm_Load(object sender, EventArgs e)
@@ -130,11 +150,14 @@ namespace Dmitriev.AdWatcher.UI
       }
       using (var db = new AdvDb())
       {
+        var now = DateTime.Now;
         db.Feed.InsertWithIdentity(() =>
           new AdvWatcher.Feed
           {
             Caption = frm.Feed.Caption,
-            Url = frm.Feed.Url
+            Url = frm.Feed.Url,
+            LastAdTime = now,
+            LastCheckTime = now
           });
       }
       ReloadFeeds();
@@ -148,6 +171,38 @@ namespace Dmitriev.AdWatcher.UI
     private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
     {
       tsbRemoveFeed.Enabled = listBox1.SelectedIndices.Count > 0;
+    }
+
+    private void miFeedList_Click(object sender, EventArgs e)
+    {
+      ShowInTaskbar = true;
+      Show();
+      WindowState = FormWindowState.Normal;
+    }
+
+    private void miNewFeeds_Click(object sender, EventArgs e)
+    {
+      ShowNewFeedsDialog();
+    }
+
+    private void ShowNewFeedsDialog()
+    {
+      if (!_unreadAdvs.Any())
+      {
+        return;
+      }
+      var frm = new UnreadAdvsForm(_feeds.ToArray(), _unreadAdvs);
+      if (frm.ShowDialog() != DialogResult.OK)
+      {
+        return;
+      }
+      _unreadAdvs.Clear();
+      miNewFeeds.Enabled = false;
+    }
+
+    private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
+    {
+      ShowNewFeedsDialog();
     }
   }
 }

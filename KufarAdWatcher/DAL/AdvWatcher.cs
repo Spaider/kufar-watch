@@ -12,6 +12,7 @@ namespace Dmitriev.AdWatcher.DAL
     {
       [PrimaryKey, Identity]
       public int      Id          { get; set; }
+      public int      FeedId      { get; set; }
       public DateTime Time        { get; set; }
       public string   Description { get; set; }
       public string   Url         { get; set; }
