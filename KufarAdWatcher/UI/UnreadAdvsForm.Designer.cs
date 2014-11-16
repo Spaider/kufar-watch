@@ -70,6 +70,7 @@
       this.listAdvs.TabIndex = 2;
       this.listAdvs.UseCompatibleStateImageBehavior = false;
       this.listAdvs.View = System.Windows.Forms.View.Details;
+      this.listAdvs.DoubleClick += new System.EventHandler(this.listAdvs_DoubleClick);
       // 
       // columnHeader1
       // 

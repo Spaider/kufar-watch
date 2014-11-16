@@ -47,5 +47,21 @@ namespace Dmitriev.AdWatcher.UI
         group.Items.Add(listItem);
       }
     }
+
+    private void listAdvs_DoubleClick(object sender, System.EventArgs e)
+    {
+      var pt = listAdvs.PointToClient(MousePosition);
+      var item = listAdvs.GetItemAt(pt.X, pt.Y);
+      if (item == null)
+      {
+        return;
+      }
+      var adv = item.Tag as AdvWatcher.Adv;
+      if (adv == null)
+      {
+        return;
+      }
+      Process.Start(adv.Url);
+    }
   }
 }
