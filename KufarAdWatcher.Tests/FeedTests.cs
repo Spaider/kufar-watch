@@ -1,4 +1,4 @@
-﻿using Dmitriev.AdWatcher.DAL;
+﻿using System.Linq;
 using Dmitriev.AdWatcher.Feeds;
 using NUnit.Framework;
 
@@ -16,6 +16,13 @@ namespace KufarAdWatcher.Tests
       var advList = feed.GetAdvs();
 
       Assert.IsNotEmpty(advList);
+
+      var adv = advList.First();
+
+      Assert.IsNotNull(adv);
+      Assert.IsNotNull(adv.Description);
+      Assert.IsNotNull(adv.Url);
+      Assert.That(adv.Price, Is.GreaterThan(0));
     } 
   }
 }

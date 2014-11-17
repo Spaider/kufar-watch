@@ -84,6 +84,8 @@ namespace Dmitriev.AdWatcher.Kufar
             [FeedId] INTEGER NOT NULL,
             [Time] TIMESTAMP  NULL,
             [Description] TEXT  NOT NULL,
+            [Price] REAL NULL,
+            [Currency] TEXT NULL,
             [Url] TEXT  NOT NULL,
             [IsRead] BOOLEAN  NOT NULL);
 
