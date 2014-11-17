@@ -111,7 +111,20 @@ namespace Dmitriev.AdWatcher.UI
       {
         feedsCopy = _feeds.ToArray();
       }
-      var newAds = (await Scheduler.CheckForNewAds(feedsCopy)).ToArray();
+      AdvWatcher.Adv[] newAds = null;
+      try
+      {
+        newAds = (await Scheduler.CheckForNewAds(feedsCopy)).ToArray();
+      }
+      catch (Exception e)
+      {
+        notifyIcon1.ShowBalloonTip(
+          10000,
+          "Что-то не так",
+          "Ошибка при проверке объявлений",
+          ToolTipIcon.Error);
+        return;
+      }
       _checkInProgress = false;
 
       if (newAds.Any())

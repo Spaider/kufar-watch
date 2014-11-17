@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Dmitriev.AdWatcher.DAL;
 using HtmlAgilityPack;
@@ -20,11 +21,20 @@ namespace Dmitriev.AdWatcher.Feeds
 
     public IEnumerable<AdvWatcher.Adv> GetAdvs()
     {
-      var web = new HtmlWeb();
-      var doc = web.Load(_url);
-      var nodes = doc.DocumentNode.SelectNodes("//*[@id=\"list_item_thumbs\"]/article");
+      try
+      {
+        var web = new HtmlWeb();
+        var doc = web.Load(_url);
+        var nodes = doc.DocumentNode.SelectNodes("//*[@id=\"list_item_thumbs\"]/article");
 
-      return nodes != null ? nodes.Select(CreateAdFromNode) : new AdvWatcher.Adv[0];
+        return nodes != null ? nodes.Select(CreateAdFromNode) : new AdvWatcher.Adv[0];
+      }
+      catch (Exception e)
+      {
+        Trace.Fail("Ошибка загрузки ленты: " + e.Message);
+        Trace.Fail(e.StackTrace);
+        throw;
+      }
     }
 
     private static AdvWatcher.Adv CreateAdFromNode(HtmlNode node)
