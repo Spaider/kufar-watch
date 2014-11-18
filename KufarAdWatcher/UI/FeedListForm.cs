@@ -139,13 +139,13 @@ namespace Dmitriev.AdWatcher.UI
           "Новых объявлений: " + _unreadAdvs.Count,
           ToolTipIcon.Info);
         miNewFeeds.Enabled = true;
-        UpdateTrayIconAndText();
         using (var stream = Resources.NewAdsAvailable)
         {
           var player = new SoundPlayer(stream);
           player.Play();
         }
       }
+      UpdateTrayIconAndText();
     }
 
     private void UpdateTrayIconAndText()
