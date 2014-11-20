@@ -111,7 +111,7 @@ namespace Dmitriev.AdWatcher.UI
       {
         feedsCopy = _feeds.ToArray();
       }
-      AdvWatcher.Adv[] newAds = null;
+      AdvWatcher.Adv[] newAds;
       try
       {
         newAds = (await Scheduler.CheckForNewAds(feedsCopy)).ToArray();
@@ -123,6 +123,8 @@ namespace Dmitriev.AdWatcher.UI
           "Что-то не так",
           "Ошибка при проверке объявлений",
           ToolTipIcon.Error);
+        Trace.Fail(e.Message);
+        Trace.Fail(e.StackTrace);
         return;
       }
       _checkInProgress = false;
