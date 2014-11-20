@@ -70,6 +70,7 @@
     <Compile Include="Feeds\Kufar.cs" />
     <Compile Include="DAL\AdvWatcher.cs" />
     <Compile Include="Scheduler.cs" />
+    <Compile Include="Toolbox.cs" />
     <Compile Include="UI\EditFeedDialog.cs">
       <SubType>Form</SubType>
     </Compile>

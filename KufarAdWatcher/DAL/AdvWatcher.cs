@@ -15,6 +15,8 @@ namespace Dmitriev.AdWatcher.DAL
       public int      FeedId      { get; set; }
       public DateTime Time        { get; set; }
       public string   Description { get; set; }
+      public double?  Price       { get; set; }
+      public string   Currency    { get; set; }
       public string   Url         { get; set; }
       public bool     IsRead      { get; set; }
     }

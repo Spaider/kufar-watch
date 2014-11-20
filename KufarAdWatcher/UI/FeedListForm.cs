@@ -114,7 +114,8 @@ namespace Dmitriev.AdWatcher.UI
       AdvWatcher.Adv[] newAds;
       try
       {
-        newAds = (await Scheduler.CheckForNewAds(feedsCopy)).ToArray();
+        var skipLastTimeCheck = (ModifierKeys & Keys.Shift) != 0; 
+        newAds = (await Scheduler.CheckForNewAds(feedsCopy, skipLastTimeCheck)).ToArray();
       }
       catch (Exception e)
       {

@@ -33,7 +33,8 @@
       this.panel1 = new System.Windows.Forms.Panel();
       this.btnCancel = new System.Windows.Forms.Button();
       this.listAdvs = new System.Windows.Forms.ListView();
-      this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.headerCaption = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.headerPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.panel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -72,7 +73,8 @@
       // listAdvs
       // 
       this.listAdvs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
+            this.headerCaption,
+            this.headerPrice});
       this.listAdvs.Dock = System.Windows.Forms.DockStyle.Fill;
       this.listAdvs.FullRowSelect = true;
       this.listAdvs.Location = new System.Drawing.Point(0, 0);
@@ -83,10 +85,16 @@
       this.listAdvs.View = System.Windows.Forms.View.Details;
       this.listAdvs.DoubleClick += new System.EventHandler(this.listAdvs_DoubleClick);
       // 
-      // columnHeader1
+      // headerCaption
       // 
-      this.columnHeader1.Text = "";
-      this.columnHeader1.Width = 581;
+      this.headerCaption.Text = "Описание";
+      this.headerCaption.Width = 400;
+      // 
+      // headerPrice
+      // 
+      this.headerPrice.Text = "Цена";
+      this.headerPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+      this.headerPrice.Width = 100;
       // 
       // UnreadAdvsForm
       // 
@@ -114,7 +122,8 @@
     private System.Windows.Forms.Button btnOK;
     private System.Windows.Forms.Panel panel1;
     private System.Windows.Forms.ListView listAdvs;
-    private System.Windows.Forms.ColumnHeader columnHeader1;
+    private System.Windows.Forms.ColumnHeader headerCaption;
     private System.Windows.Forms.Button btnCancel;
+    private System.Windows.Forms.ColumnHeader headerPrice;
   }
 }
