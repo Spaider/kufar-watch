@@ -12,12 +12,12 @@ namespace Dmitriev.AdWatcher
   {
     private const string TRACE_CATEGORY = "Scheduler";
 
-    public static Task<AdvWatcher.Adv[]> CheckFeed(int id)
+    public static Task<AdvWatcher.Adv[]> CheckFeed(int id, bool skipLastTimeCheck = false)
     {
-      return Task.Run(() => CheckFeedInternal(id));
+      return Task.Run(() => CheckFeedInternal(id, skipLastTimeCheck));
     }
 
-    public static async Task<IEnumerable<AdvWatcher.Adv>> CheckForNewAds(AdvWatcher.Feed[] feeds)
+    public static async Task<IEnumerable<AdvWatcher.Adv>> CheckForNewAds(AdvWatcher.Feed[] feeds, bool skipLastTimeCheck = false)
     {
       if (feeds == null || !feeds.Any())
       {
@@ -27,7 +27,7 @@ namespace Dmitriev.AdWatcher
       foreach (var f in feeds)
       {
         var f1 = f;
-        var ads = await CheckFeed(f1.Id);
+        var ads = await CheckFeed(f1.Id, skipLastTimeCheck);
         if (ads.Any())
         {
           newAds.AddRange(ads);
@@ -36,7 +36,7 @@ namespace Dmitriev.AdWatcher
       return newAds;
     }
 
-    private static AdvWatcher.Adv[] CheckFeedInternal(int id)
+    private static AdvWatcher.Adv[] CheckFeedInternal(int id, bool skipLastTimeCheck = false)
     {
       using (var db = new AdvDb())
       {
@@ -52,7 +52,7 @@ namespace Dmitriev.AdWatcher
         var checkTime = DateTime.Now;
         var advList = feedList
           .GetAdvs()
-          .Where(a => a.Time > lastTime)
+          .Where(a => skipLastTimeCheck || a.Time > lastTime)
           .OrderByDescending(a => a.Time)
           .ToArray();
 

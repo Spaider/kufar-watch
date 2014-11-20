@@ -43,6 +43,10 @@ namespace Dmitriev.AdWatcher.UI
           Text = adv.Description,
           Tag = adv
         };
+        if (adv.Price.HasValue)
+        {
+          listItem.SubItems.Add(Toolbox.FormatPrice((float) adv.Price.Value, adv.Currency));
+        }
         listAdvs.Items.Add(listItem);
         group.Items.Add(listItem);
       }
@@ -67,12 +71,13 @@ namespace Dmitriev.AdWatcher.UI
 
     private void UnreadAdvsForm_Resize(object sender, System.EventArgs e)
     {
-      AutoSizeColumns();
+//      AutoSizeColumns();
     }
 
     private void AutoSizeColumns()
     {
-      listAdvs.Columns[0].Width = ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 4;
+      listAdvs.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+      // listAdvs.Columns[0].Width = ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 4;
     }
   }
 }

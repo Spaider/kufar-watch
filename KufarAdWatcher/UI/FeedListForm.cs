@@ -111,7 +111,8 @@ namespace Dmitriev.AdWatcher.UI
       {
         feedsCopy = _feeds.ToArray();
       }
-      var newAds = (await Scheduler.CheckForNewAds(feedsCopy)).ToArray();
+      var skipLastTimeCheck = (ModifierKeys & Keys.Shift) != 0; 
+      var newAds = (await Scheduler.CheckForNewAds(feedsCopy, skipLastTimeCheck)).ToArray();
       _checkInProgress = false;
 
       if (newAds.Any())
