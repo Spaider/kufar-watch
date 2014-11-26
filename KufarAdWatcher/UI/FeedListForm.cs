@@ -20,6 +20,7 @@ namespace Dmitriev.AdWatcher.UI
     private readonly object                   _feedSync         = new object();
     private bool                              _checkInProgress;
     private readonly IList<AdvWatcher.Adv>    _unreadAdvs       = new List<AdvWatcher.Adv>();
+    private bool                              _closeRequested   = false;
 
     public FeedListForm()
     {
@@ -70,6 +71,7 @@ namespace Dmitriev.AdWatcher.UI
 
     private void miExit_Click(object sender, EventArgs e)
     {
+      _closeRequested = true;
       Close();
     }
 
@@ -255,6 +257,16 @@ namespace Dmitriev.AdWatcher.UI
     private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
     {
       ShowNewFeedsDialog();
+    }
+
+    private void FeedListForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+       if (_closeRequested || e.CloseReason != CloseReason.UserClosing)
+      {
+        return;
+      }
+      e.Cancel = true;
+      WindowState = FormWindowState.Minimized;
     }
   }
 }

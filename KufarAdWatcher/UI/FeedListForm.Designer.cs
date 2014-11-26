@@ -155,6 +155,7 @@
       this.ShowInTaskbar = false;
       this.Text = "Ленты объявлений";
       this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FeedListForm_FormClosing);
       this.Load += new System.EventHandler(this.FeedListForm_Load);
       this.Resize += new System.EventHandler(this.FeedListForm_Resize);
       this.contextMenuStrip1.ResumeLayout(false);
